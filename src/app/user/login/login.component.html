@@ -1,0 +1,8 @@
+<div class="loginPage-container">
+  <ngx-auth-firebaseui
+  [providers]="['google', 'facebook']"
+  [guestEnabled]="false"
+  (onSuccess)="printUser($event)"
+  (onError)="printError()">
+</ngx-auth-firebaseui>
+</div>

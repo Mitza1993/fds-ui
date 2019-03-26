@@ -1,0 +1,35 @@
+<div style="height: 100vh;">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+      <div>
+          <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
+              <mat-icon>menu</mat-icon>
+            </button>
+            <span>Frizeria din Subsol</span>
+            <span class="example-spacer"></span>
+      </div>
+      <div fxShow="true"  fxLayout="row"  fxLayoutAlign="end center" fxHide.lt-md="true" >
+        <!-- The following menu items will be hidden on both SM and XS screen sizes -->
+
+        <a href="#" mat-button *ngFor="let item of menuItems">
+          <mat-icon>{{item.icon}}</mat-icon>
+          {{item.name}}
+        </a>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-sidenav-container fxFlexFill>
+    <mat-sidenav #sidenav>
+      <mat-nav-list>
+        <a href="" mat-list-item *ngFor="let item of menuItems">
+          <mat-icon>{{item.icon}}</mat-icon>
+          {{item.name}}
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

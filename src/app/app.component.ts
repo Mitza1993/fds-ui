@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { switchMap } from 'rxjs/operators';
+import { Observable , of} from 'rxjs';
+import { Angajat } from './models/angajat.model';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +9,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'fds-app';
+
+  constructor()  {
+  }
+
+  printUser(event) {
+
+  }
 }
