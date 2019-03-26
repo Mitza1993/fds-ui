@@ -16,22 +16,31 @@ export class NavbarComponent implements OnInit {
       {
         id: 0,
         name: 'Despre',
-        selected: false
+        selected: false,
+        icon: 'home'
       },
       {
         id: 1,
         name: 'Servicii',
-        selected: false
+        selected: false,
+        icon: 'description'
       },
       {
         id: 2,
         name: 'Angajati',
-        selected: false
+        selected: false,
+        icon: 'people_outline'
       },
       {
         id: 3,
         name: 'Contact',
-        selected: false
+        selected: false,
+        icon: 'local_phone'
+      }, {
+        id: 4,
+        name: 'User',
+        selected: false,
+        icon: 'user'
       }
     ];
   }

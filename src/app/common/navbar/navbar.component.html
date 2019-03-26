@@ -1,4 +1,4 @@
-<div style="height: 100vh;">
+<div class="navbar-component" style="height: 100vh;">
   <mat-toolbar color="primary">
     <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
       <div>
@@ -31,5 +31,9 @@
     <mat-sidenav-content>
       <router-outlet></router-outlet>
     </mat-sidenav-content>
+
+    <div class="footer" #footer>
+        Your sticky footer with a variable height.
+      </div>
   </mat-sidenav-container>
 </div>
