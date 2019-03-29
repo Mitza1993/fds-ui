@@ -6,6 +6,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { userRoutes } from './user.routes';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
+import { environment } from './../../environments/environment';
 
 import {
   MatMenuModule,
@@ -28,6 +30,7 @@ import {
   imports: [
     CommonModule,
     FormsModule, ReactiveFormsModule, RouterModule.forChild(userRoutes),
+    NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig),
     MatMenuModule,
     MatInputModule,
     MatPaginatorModule,
@@ -41,6 +44,7 @@ import {
     MatCardModule,
     MatFormFieldModule,
     MatListModule
-  ]
+  ],
+  providers: []
 })
 export class UserModule { }
