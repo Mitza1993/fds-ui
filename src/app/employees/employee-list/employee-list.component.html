@@ -1,0 +1,8 @@
+<div class="employee-list-component">
+  <h1>LISTA ANGAJATILOR NOSTRII</h1>
+  <div fxLayout="row wrap" fxLayoutAlign="space-around center" fxLayoutGap="2% grid">
+    <div fxFlex="25" [fxFlex.md]="30" [fxFlex.sm]="30" [fxFlex.xs]="80" class="employee-list-container" *ngFor="let employee of employees">
+      <app-employee-card [employee]="employee"></app-employee-card>
+    </div>
+  </div>
+</div>

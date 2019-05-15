@@ -1,192 +1,84 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  ViewChild,
-  TemplateRef,
-  OnInit
-} from '@angular/core';
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours
-} from 'date-fns';
-import { Subject } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent,
-  CalendarView
-} from 'angular-calendar';
+import { DATA_SET } from './../dataset';
+import { AppointmentEditorComponent } from './appointment-editor/appointment-editor.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { DxSchedulerComponent } from 'devextreme-angular';
+import { ActivatedRoute } from '@angular/router';
+import { FormControl } from '@angular/forms';
+import {MatDialog} from '@angular/material';
 
-const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3'
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF'
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA'
-  }
-};
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html',
-  styleUrls: ['./appointments.component.scss']
+  styleUrls: ['./appointments.component.scss'],
+  preserveWhitespaces: true
 })
 export class AppointmentsComponent implements OnInit {
+  @ViewChild(DxSchedulerComponent) scheduler: DxSchedulerComponent;
+  employeesFormControl = new FormControl();
+  appointmentsData;
+  selectedEmployee: any;
+  employees;
+  currentDate: Date = new Date(2017, 4, 22);
+  editingOptions : boolean = false;
 
-  @ViewChild('modalContent') modalContent: TemplateRef<any>;
+  constructor(public route: ActivatedRoute, public dialog: MatDialog) {
+   }
 
-  view: CalendarView = CalendarView.Month;
+  ngOnInit() {
+    this.employees = DATA_SET.users.filter(user => user.role === 'employee');
 
-  CalendarView = CalendarView;
-
-  viewDate: Date = new Date();
-
-  modalData: {
-    action: string;
-    event: CalendarEvent;
-  };
-
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fa fa-fw fa-pencil"></i>',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      }
-    },
-    {
-      label: '<i class="fa fa-fw fa-times"></i>',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter(iEvent => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      }
-    }
-  ];
-
-  refresh: Subject<any> = new Subject();
-
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue,
-      allDay: true
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: new Date(),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    }
-  ];
-
-  activeDayIsOpen: boolean = true;
-
-  constructor(private modal: NgbModal) {}
-
-  ngOnInit() {}
-
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      this.viewDate = date;
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
+    this.route.data.forEach(data => {
+      if (data.employee) {
+        this.selectedEmployee = [data.employee];
+        this.appointmentsData = DATA_SET.appointments.filter((appointment) => {
+          return appointment.ownerId === data.employee.id;
+        });
       } else {
-        this.activeDayIsOpen = true;
+        this.appointmentsData = DATA_SET.appointments;
       }
-    }
-  }
-
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd
-  }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map(iEvent => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd
-        };
-      }
-      return iEvent;
     });
-    this.handleEvent('Dropped or resized', event);
   }
 
-  handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
+  onAppointmentDblClick(e) {
+    e.cancel = true; //disabled default form editor
+    this.openDialog(e.appointmentData);
   }
 
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true
-        }
+  onCellClick(e) {
+    let appointment: any = {};
+    if(e.cellData) {
+      appointment.startDate = e.cellData.startDate;
+      appointment.endDate = e.cellData.endDate;
+    }
+    this.openDialog(appointment);
+  }
+
+  updateAppointments(data) {
+    const filtered = DATA_SET.appointments.filter((el) => {
+      return data.some((f) => {
+        return f.id === el.ownerId;
+      });
+    });
+    this.appointmentsData = filtered;
+  }
+
+  deleteAppointment(appointment) {
+    // if userRole === client
+    this.scheduler.instance.hideAppointmentTooltip();
+    this.scheduler.instance.deleteAppointment(this.appointmentsData.find(app => app.ownerId === appointment.ownerId));
+  }
+  openDialog(data) {
+    this.scheduler.instance.hideAppointmentTooltip();
+    const dialogRef = this.dialog.open(AppointmentEditorComponent, {
+      width: '350px',
+      data: {
+        appointment: data,
+        employees: this.employees
       }
-    ];
-  }
+    });
 
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter(event => event !== eventToDelete);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
-
-  setView(view: CalendarView) {
-    this.view = view;
-  }
-
-  closeOpenMonthViewDay() {
-    this.activeDayIsOpen = false;
-  }
-
 }

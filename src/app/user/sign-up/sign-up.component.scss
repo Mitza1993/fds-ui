@@ -1,0 +1,29 @@
+.signUp-form {
+    margin: 13px 2px;
+    .mat-card-header-text {
+        margin: auto
+    }
+
+    mat-card-actions {
+        padding-bottom: 8px;
+    }
+
+    table {
+        margin: auto;
+        width: 80%;
+    }
+
+    mat-form-field {
+        width: 100%;
+    }
+
+    .signUp-actions {
+        width: 95%;
+    }
+
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+    }
+}

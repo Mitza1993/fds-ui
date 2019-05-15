@@ -1,0 +1,77 @@
+<div class="appointment-editor">
+  <h3>{{ data.appointment.description }}</h3>
+  <h6>
+    Data programarii: {{ data.appointment.startDate | date: "shortDate" }}
+  </h6>
+  <form novalidate [formGroup]="appointmentForm" (ngSubmit)="save()">
+    <div formGroupName="hourGroup">
+      <mat-form-field>
+        <mat-label>De la:</mat-label>
+        <input
+          matInput
+          formControlName="startHour"
+          [ngxTimepicker]="startHour"
+        />
+        <ngx-material-timepicker
+          #startHour
+          color="primary"
+        ></ngx-material-timepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Pana la:</mat-label>
+        <input
+          matInput
+          formControlName="endHour"
+          [ngxTimepicker]="endHour"
+          [min]="appointmentForm.get('hourGroup.startHour').value"
+        />
+        <ngx-material-timepicker #endHour></ngx-material-timepicker>
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <mat-label>Selecteaza angajatul</mat-label>
+      <mat-select
+        formControlName="selectedEmployee"
+        (selectionChange)="selectionChange($event.value)"
+        [disabled]="disableSelection"
+      >
+        <mat-option *ngFor="let employee of data.employees" [value]="employee">
+          {{ employee.firstName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div
+      formArrayName="services"
+      *ngFor="
+        let service of appointmentForm.get('services').controls;
+        let i = index
+      "
+    >
+      <div [formGroupName]="i">
+        <div>
+          <mat-checkbox
+            color="primary"
+            formControlName="checked"
+            checked="appointmentForm.get('services').controls[i].value.checked"
+          >
+            {{ appointmentForm.get("services").controls[i].value.name }} |
+            {{ appointmentForm.get("services").controls[i].value.price }} lei
+            <br />
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
+    <div
+      class="appointmentForm-actions"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+    >
+      <button mat-raised-button type="button" (click)="cancel()">
+        ANULEAZA
+      </button>
+      <button mat-raised-button type="submit" color="primary">
+        SALVEAZA
+      </button>
+    </div>
+  </form>
+</div>

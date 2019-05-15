@@ -1,8 +1,6 @@
-import { SignUpComponent } from './sign-up/sign-up.component';
 import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
-export const userRoutes = [
-    { path: 'profile', component: SignUpComponent},
-    { path: 'login', component: LoginComponent}
+export const userRoutes: Routes = [
+    { path: 'register', component: RegisterComponent}
 ];

@@ -1,3 +1,53 @@
-<p>
-  sign-up works!
-</p>
+<div class="signUp-form">
+  <form [formGroup]="signUpForm" (ngSubmit)="signUp(signUpForm.value)" autocomplete="off" fxLayout="column" fxLayoutAlign="space-between center">
+    <div class="form-fields" fxLayout="row wrap" fxLayoutAlign="space-between start">
+      <div fxFlex="55">
+        <mat-form-field>
+          <input matInput placeholder="Nume" formControlName="lastName" id="lastName" type="text" required>
+          <mat-icon matSuffix>face</mat-icon>
+          <mat-error *ngIf="lastName.invalid && lastName.touched">Numele este obligatoriu</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Prenume" formControlName="firstName" id="firstName" type="text" required>
+          <mat-error *ngIf="firstName.invalid && firstName.touched">Prenumele este obligatoriu</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email" id="email" type="email" required>
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-error *ngIf="email.invalid && email.touched && email?.errors.required">Adresa de email este obligatorie</mat-error>
+          <mat-error *ngIf="email.invalid && email.touched && email?.errors.email">Email incorect</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Introdu parola" formControlName="password" [type]="hide ? 'password' : 'text'" required>
+          <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Ascunde parola'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="password.invalid && password.touched">Parola este obligatorie</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="35">
+        <mat-form-field>
+          <input matInput placeholder="Telefon" formControlName="phone" id="phone" type="number" required>
+          <mat-icon matSuffix>phone</mat-icon>
+          <mat-error *ngIf="phone.invalid && phone.touched">Telefonul este obligatoriu</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Adresa" formControlName="address" id="address" type="text">
+          <mat-icon matSuffix>home</mat-icon>
+        </mat-form-field>
+        <mat-form-field>
+          <textarea matInput matTextareaAutosize placeholder="Despre tine" formControlName="bio"></textarea>
+          <mat-icon matSuffix>info</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="signUp-actions" flex="100" fxLayout="row" fxLayoutAlign="space-around center">
+      <button mat-raised-button color="accent" type="button" click="cancel()">ANULEAZA</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="signUpForm.invalid">
+        INREGISTREAZA-TE
+      </button>
+    </div>
+  </form>
+</div>

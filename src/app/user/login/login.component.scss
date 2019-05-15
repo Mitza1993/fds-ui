@@ -1,0 +1,45 @@
+.login-card {
+    .mat-card-header-text {
+        margin: auto
+    }
+
+    mat-card-actions {
+        padding-bottom: 8px;
+    }
+
+    table {
+        margin: auto;
+        width: 80%;
+    }
+
+    mat-form-field {
+        width: 100%;
+    }
+
+    .socialMedia-container {
+        width: 100%;
+
+        p {
+            color: grey;
+            font-size: 12px;
+        }
+        button:first-child {
+            background-color: #3b5998;
+            color:white;
+             
+        }
+        button:nth-child(2) {
+            background-color:#D44638;
+            color:white;
+        }
+
+        button:nth-child(3) {
+            background-color:#00acee;
+            color:white;
+        }
+    }
+
+    .socialMedia-actions {
+        width: 50%;
+    }
+}

@@ -1,0 +1,42 @@
+<mat-card class="employee-card">
+  <mat-card-header>
+    <mat-card-title>{{employee.firstName}} {{employee.lastName}}</mat-card-title>
+    <mat-card-subtitle>{{employee.experience}}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image [src]="employee.photo" alt="Photo of a Shiba Inu">
+  <div class="bottom-right"> A small, agile dog that copes very well with mountainous terrain
+  </div>
+  <mat-card-content>
+
+    <div class="employee-details" fxLayout="column">
+      <h4>Servicii</h4>
+      <mat-list fxLayout="column" fxLayoutAlign="space-between start">
+        <mat-list-item *ngFor="let service of employee.services" fxLayout="row" fxLayoutAlign="space-between center">
+          <mat-divider></mat-divider>
+          <div>
+            <p>
+              <strong>{{service.name}}</strong>
+              <p>
+          </div>
+          <div>
+            <p> {{service.price}} RON</p>
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </div>
+
+    <ngx-image-gallery [images]="images" [conf]="conf">
+    </ngx-image-gallery>
+
+  </mat-card-content>
+  <mat-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button class="btn-likes" (click)="liked = !liked" mat-icon-button color="primary" type="submit">
+      <mat-icon svgIcon="{{liked ? 'thumb-up' : 'thumb-up_outlined'}}"></mat-icon>{{employee.likes}}</button>
+    <button class="btn-new-appointment" mat-raised-button [routerLink]="['/appointments', employee.id]">REZERVA
+      <mat-icon>today</mat-icon>
+    </button>
+    <button class="btn-open-portofolio" mat-fab-button (click)="openGallery()">
+      <mat-icon>photo_library</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,46 @@
+.employee-card {
+    text-align: center;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, .5);
+
+    .mat-card-header-text {
+        margin: auto;
+    }
+    .mat-card-header {
+        .mat-card-title {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        .mat-card-subtitle {
+            margin-bottom: 2px;
+        }
+    }
+
+    h4 {
+        margin: 0;
+    }
+
+    .bottom-right {
+        position: absolute;
+        bottom: 240px;
+        color: white;
+        background-color: black;
+        font-size: 12px;
+        right:0;
+    }
+
+    .mat-card-image {
+        margin-bottom: 0;
+    }
+
+    .mat-list-item {
+        font-size: 14px;
+        max-height: 35px;
+        width: 100%;
+        justify-content: space-between;
+        .mat-list-item-content:not(:empty) {
+            padding: 0;
+            width: 100% !important;
+            justify-content: space-between !important;
+        }
+    }
+}

@@ -1,0 +1,25 @@
+@import './../../../custom-material.theme';
+
+.navbar-component {
+    .user-image {
+        border-radius: 50px;
+        width: 30px;
+        border: 2px solid white;
+    }
+
+    .mat-toolbar {
+        position:  fixed;
+        z-index: 999;
+    }
+
+    .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 50px;
+        background-color: $primary;
+        color:white;;
+        text-align: center;
+        margin: 0px;
+    }
+}

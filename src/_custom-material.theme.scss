@@ -46,6 +46,7 @@ $md-mcgpalette0: (
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $app-primary: mat-palette($md-mcgpalette0);
+$app-secondary: mat-palette($md-mcgpalette0, A300);
 $app-accent:  mat-palette($md-mcgpalette0, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
@@ -62,4 +63,5 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 @include angular-material-theme($app-theme);
 
 $primary: mat-color($app-primary);
+$seconday: mat-color($app-secondary);
 
