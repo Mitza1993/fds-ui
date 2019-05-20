@@ -3,16 +3,16 @@
     <mat-sidenav #sidenav>
       <mat-nav-list fxLayout="column">
         <mat-list-item [routerLink]="">Despre</mat-list-item>
-        <mat-list-item [routerLink]="['/appointments']" (click)="sidenav.close()">Programari</mat-list-item>
-        <mat-list-item [routerLink]="['/employees']" (click)="sidenav.close()">Angajati</mat-list-item>
-        <mat-list-item [routerLink]="['/contact']" (click)="sidenav.close()">Contact</mat-list-item>
-        <mat-list-item *ngIf="!authService.isAuthenticated()" [routerLink]="['user/register']" (click)="sidenav.close()" >Autentifica-te</mat-list-item>
+        <mat-list-item [routerLink]="['/appointments']"  [routerLinkActive]="['is-active']" (click)="sidenav.close()">Programari</mat-list-item>
+        <mat-list-item [routerLink]="['/employees']"  [routerLinkActive]="['is-active']" (click)="sidenav.close()">Angajati</mat-list-item>
+        <mat-list-item [routerLink]="['/contact']"  [routerLinkActive]="['is-active']" (click)="sidenav.close()">Contact</mat-list-item>
+        <mat-list-item *ngIf="!authService.isAuthenticated()" [routerLink]="['user/register']" (click)="sidenav.close()" [routerLinkActive]="['is-active']" >Autentifica-te</mat-list-item>
         <mat-list-item *ngIf="authService.isAuthenticated()" [routerLink]="['user/profile']" (click)="sidenav.close()">Detalii cont</mat-list-item>
-        <mat-list-item *ngIf="authService.isAuthenticated()" (click)="authService.signOut(); sidenav.close()">Deconectare</mat-list-item>
+        <mat-list-item *ngIf="authService.isAuthenticated()" (click)="authService.signOut(); sidenav.close()"  [routerLinkActive]="['is-active']">Deconectare</mat-list-item>
       </mat-nav-list>
     </mat-sidenav>
 
-    <mat-toolbar color="primary" #toolbar>
+    <mat-toolbar #toolbar>
       <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
         <div>
           <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
@@ -27,19 +27,16 @@
             <a href="#" mat-button>
               Despre
             </a>
-            <a href="#" mat-button>
-              Servicii
-            </a>
-            <a [routerLink]="['/appointments']" href="#" mat-button>
+            <a [routerLink]="['/appointments']"  [routerLinkActive]="['is-active']" mat-button>
               Programari
             </a>
-            <a [routerLink]="['/employees']" mat-button>
+            <a [routerLink]="['/employees']"  [routerLinkActive]="['is-active']" mat-button>
               Angajati
             </a>
-            <a href="#" mat-button>
+            <a [routerLinkActive]="['is-active']"mat-button>
               Contact
             </a>
-            <a *ngIf="!authService.isAuthenticated()" href="#" [routerLink]="['user/register']" mat-button>
+            <a *ngIf="!authService.isAuthenticated()" href="#" [routerLink]="['user/register']"  [routerLinkActive]="['is-active']" mat-button>
               Conecteaza-te
             </a>
           </div>
@@ -48,9 +45,9 @@
               <img class="user-image" [src]="authService.currentUser.photoUrl" /> {{ authService.currentUser.name }}
             </a>
             <mat-menu #userProfile="matMenu">
-              <button mat-menu-item [routerLink]="['user/profile']">Detaill cont</button>
-              <button mat-menu-item [routerLink]="['user/appointments']">Programari</button>
-              <button mat-menu-item (click)="authService.signOut()">Sign Out</button>
+              <button mat-menu-item [routerLink]="['user/profile']"  [routerLinkActive]="['is-active']">Detaill cont</button>
+              <button mat-menu-item [routerLink]="['user/appointments']"  [routerLinkActive]="['is-active']">Programari</button>
+              <button mat-menu-item (click)="authService.signOut()"  [routerLinkActive]="['is-active']">Sign Out</button>
             </mat-menu>
           </div>
         </div>
@@ -60,7 +57,7 @@
     <div class="content" #main>
       <router-outlet></router-outlet>
     </div>
-    <div class="footer" backgroundColor="primary" #footer>
+    <div class="footer" #footer>
       © Copyright 2019 MISSOLUTION | Privacy
     </div>
   </mat-sidenav-container>
